@@ -1,0 +1,27 @@
+Install Java:
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+sudo vim /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+source /etc/environment
+
+Install Python:
+sudo apt install python
+sudo apt install python-pip
+sudo pip install numpy
+sudo pip install flask
+sudo pip install cherrypy
+sudo pip install pastescript
+
+Install Spark:
+scp -i master.pem spark-2.2.0-bin-hadoop2.7.tgz ubuntu@13.58.14.26:/home/ubuntu/
+tar -xzf spark-2.2.0-bin-hadoop2.7.tgz
+sudo vim ~/.bashrc
+export SPARK_HOME=~/spark-2.2.0-bin-hadoop2.7
+export PATH=$SPARK_HOME/bin:$PATH
+source ~/.bashrc
+
+
+Install pyspark:
+sudo pip --no-cache-dir install pyspark
