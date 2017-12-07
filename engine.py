@@ -38,12 +38,12 @@ class RecommendationEngine:
 
     def __predict_ratings(self, user_and_game_RDD):
         """Gets predictions for a given (userID, gameID) formatted RDD
-        Returns: an RDD with format (gameTitle, gameRating, numRatings)
+        Returns: an RDD with format (gameID, gameRating, numRatings)
         """
-        logger.info("Input: " + str(user_and_game_RDD.takeOrdered(1)))
         predicted_RDD = self.model.predictAll(user_and_game_RDD)
-        logger.info("Predicted Ratings" + str(predicted_RDD.takeOrdered(5)))
         predicted_rating_RDD = predicted_RDD.map(lambda x: (x.product, x.rating))
+        logger.info("predicted ratings: " + str(predicted_rating_RDD.takeOrdered(5)))
+        logger.info("rating counts: " + str(self.game_rating_counts_RDD.takeOrdered(5)))
         predicted_rating_title_and_count_RDD = \
             predicted_rating_RDD.join(self.game_rating_counts_RDD)
         predicted_rating_title_and_count_RDD = \
@@ -101,7 +101,7 @@ class RecommendationEngine:
                                           .map(lambda tokens: (int(tokens[0]), int(tokens[1]), float(tokens[2])))\
                                           .cache()
         logger.info("Hello")
-	logger.info("Ratings Data: " + str(self.ratings_RDD.takeOrdered(5)))
+        logger.info("Ratings Data: " + str(self.ratings_RDD.takeOrdered(5)))
         # Pre-calculate games ratings counts
         self.__count_and_average_ratings()
 
