@@ -79,7 +79,7 @@ class RecommendationEngine:
         user_unrated_games_RDD = self.ratings_RDD.filter(lambda rating: not rating[0] == user_id) \
             .map(lambda x: (user_id, x[1])).distinct()
         # Get predicted ratings
-        ratings = self.__predict_ratings(user_unrated_games_RDD).filter(lambda r: r[2] >= 25).takeOrdered(games_count,
+        ratings = self.__predict_ratings(user_unrated_games_RDD).filter(lambda r: r[2] >= 1).takeOrdered(games_count,
                                                                                                            key=lambda
                                                                                                                x: -x[1])
 
@@ -106,6 +106,6 @@ class RecommendationEngine:
         # Train the model
         self.rank = 8
         self.seed = 5L
-        self.iterations = 3
+        self.iterations = 10
         self.regularization_parameter = 0.1
         self.__train_model()
