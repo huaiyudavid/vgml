@@ -14,7 +14,9 @@ const Main = () => <div>
         </div>
         <div className="row typeahead">
             <Typeahead
-                options={GAMES.map(game => game.game)}
+                displayOption={option => option.game}
+                filterOption="game"
+                options={GAMES}
                 maxVisible={10}
                 onOptionSelected={optionSelected}
             />
