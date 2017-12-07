@@ -42,11 +42,14 @@ class Main extends React.Component {
                             }).then(response => {
                                 return response.json();
                             }).then(obj => {
-                                console.log(obj);
+                                this.recommendations = obj.map(val => val[0]);
                             });
                         }}>
                             Submit
                         </button>
+                </div>
+                <div className="recs">
+                    {this.recommendations.map(recId => <h6>{GAMES.find(game => recId == game.id)}</h6>)}
                 </div>
             </div>
         );
