@@ -57,7 +57,7 @@ class RecommendationEngine:
         # Convert ratings to an RDD
         new_ratings_RDD = self.sc.parallelize(ratings)
         # Add new ratings to the existing ones
-        self.ratings_RDD = self.ratings_RDD.union(new_ratings_RDD)
+        self.ratings_RDD = self.original_ratings_RDD.union(new_ratings_RDD)
         # Re-compute game ratings count
         self.__count_and_average_ratings()
         # Re-train the ALS model with the new ratings
@@ -100,6 +100,7 @@ class RecommendationEngine:
         self.ratings_RDD = ratings_raw_RDD.map(lambda line: line.split(","))\
                                           .map(lambda tokens: (int(tokens[0]), int(tokens[1]), float(tokens[2])))\
                                           .cache()
+        self.original_ratings_RDD = self.ratings_RDD
         logger.info("Hello")
         logger.info("Ratings Data: " + str(self.ratings_RDD.takeOrdered(5)))
         # Pre-calculate games ratings counts
