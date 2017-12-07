@@ -53,6 +53,9 @@ class Main extends React.Component {
                             Submit
                         </button>
                 </div>
+                {this.state.recommendations.length > 0 && <div className="row">
+                    <h3>Your Recommendations:</h3>
+                </div>}
                 <div className="recs">
                     {this.state.recommendations.map(recId => <h6 key={recId}>{GAMES.find(game => recId == game.id).game}</h6>)}
                 </div>
