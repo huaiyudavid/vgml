@@ -24,7 +24,12 @@
 
 .typeahead {
   width: 80%;
-  margin: 0 auto;
+  margin: 20px auto;
+}
+
+.recs {
+  width: 80%;
+  margin: 20px auto;
 }
 
 h2 {

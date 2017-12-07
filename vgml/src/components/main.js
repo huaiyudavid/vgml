@@ -9,10 +9,13 @@ let optionSelected = function(result) {
 }
 
 class Main extends React.Component {
-    state = {
-        ratings: [],
-        recommendations: []
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            ratings: [],
+            recommendations: []
+        };
+    }
 
     render() {
         return (
@@ -42,14 +45,16 @@ class Main extends React.Component {
                             }).then(response => {
                                 return response.json();
                             }).then(obj => {
-                                this.recommendations = obj.map(val => val[0]);
+                                const recs = obj.map(val => val[0]);
+                                this.setState({recommendations: recs});
+                                console.log(this.state.recommendations);
                             });
                         }}>
                             Submit
                         </button>
                 </div>
                 <div className="recs">
-                    {this.recommendations.map(recId => <h6>{GAMES.find(game => recId == game.id)}</h6>)}
+                    {this.state.recommendations.map(recId => <h6 key={recId}>{GAMES.find(game => recId == game.id).game}</h6>)}
                 </div>
             </div>
         );
