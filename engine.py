@@ -79,10 +79,10 @@ class RecommendationEngine:
         user_unrated_games_RDD = self.ratings_RDD.filter(lambda rating: not rating[0] == user_id) \
             .map(lambda x: (user_id, x[1])).distinct()
         # Get predicted ratings
-        ratings = self.__predict_ratings(user_unrated_games_RDD).takeOrdered(games_count,
-                                                                             key=lambda x: -x[1])
-
-        return user_unrated_games_RDD
+        #ratings = self.__predict_ratings(user_unrated_games_RDD).takeOrdered(games_count,
+        #                                                                     key=lambda x: -x[1])
+	ratings = self.__predict_ratings(user_unrated_games_RDD).takeOrdered(5)
+        return ratings
 
     def __init__(self, sc, dataset_path):
         """Init the recommendation engine given a Spark context and a dataset path
