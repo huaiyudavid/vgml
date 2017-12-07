@@ -2,6 +2,11 @@
 
 import React from 'react';
 import { Typeahead } from 'react-typeahead';
+import GAMES from '../games.js';
+
+let optionSelected = function(result) {
+    console.log(GAMES[result]);
+}
 
 const Main = () => <div>
         <div className="row">
@@ -9,8 +14,9 @@ const Main = () => <div>
         </div>
         <div className="row typeahead">
             <Typeahead
-                options={['Portal', 'League of Legends', 'Halo', 'COD']}
-                maxVisible={2}
+                options={GAMES.map(game => game.game)}
+                maxVisible={10}
+                onOptionSelected={optionSelected}
             />
         </div>
         
