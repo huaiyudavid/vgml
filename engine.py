@@ -81,6 +81,7 @@ class RecommendationEngine:
         # Get predicted ratings
         #ratings = self.__predict_ratings(user_unrated_games_RDD).takeOrdered(games_count,
         #                                                                     key=lambda x: -x[1])
+        logger.info("Unrated Games: " + str(user_unrated_games_RDD))
         ratings = self.__predict_ratings(user_unrated_games_RDD).takeOrdered(5)
         return ratings
 
