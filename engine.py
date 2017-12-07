@@ -40,12 +40,14 @@ class RecommendationEngine:
         """Gets predictions for a given (userID, gameID) formatted RDD
         Returns: an RDD with format (gameTitle, gameRating, numRatings)
         """
+        logger.info("Input: " + str(user_and_game_RDD.takeOrdered(1)))
         predicted_RDD = self.model.predictAll(user_and_game_RDD)
+        logger.info("Predicted Ratings" + str(predicted_RDD.takeOrdered(5)))
         predicted_rating_RDD = predicted_RDD.map(lambda x: (x.product, x.rating))
         predicted_rating_title_and_count_RDD = \
             predicted_rating_RDD.join(self.game_rating_counts_RDD)
         predicted_rating_title_and_count_RDD = \
-            predicted_rating_title_and_count_RDD.map(lambda r: (r[0], r[1][0], r[1][1]))
+            predicted_rating_title_and_count_RDD.map(lambda r: (r[0], r[1][1], r[1][0]))
 
         return predicted_RDD
 
@@ -79,10 +81,8 @@ class RecommendationEngine:
         user_unrated_games_RDD = self.ratings_RDD.filter(lambda rating: not rating[0] == user_id) \
             .map(lambda x: (user_id, x[1])).distinct()
         # Get predicted ratings
-        #ratings = self.__predict_ratings(user_unrated_games_RDD).takeOrdered(games_count,
-        #                                                                     key=lambda x: -x[1])
-        logger.info("Unrated Games: " + str(user_unrated_games_RDD))
-        ratings = self.__predict_ratings(user_unrated_games_RDD).takeOrdered(5)
+        ratings = self.__predict_ratings(user_unrated_games_RDD).takeOrdered(games_count,
+                                                                             key=lambda x: -x[1])
         return ratings
 
     def __init__(self, sc, dataset_path):
