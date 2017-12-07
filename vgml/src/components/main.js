@@ -14,7 +14,7 @@ const Main = () => <div>
         </div>
         <div className="row typeahead">
             <Typeahead
-                displayOption={option => option.game}
+                displayOption="game"
                 filterOption="game"
                 options={GAMES}
                 maxVisible={10}
