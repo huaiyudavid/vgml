@@ -32,8 +32,9 @@ def add_ratings():
     ratings = map(lambda x: (1, int(x['id']), float(x['rating'])), ratings_list)
     # add them to the model using then engine API
     recommendation_engine.add_ratings(ratings)
+    top_ratings = recommendation_engine.get_top_ratings(user_id,10)
  
-    return json.dumps(ratings)
+    return json.dumps(top_ratings)
  
  
 def create_app(spark_context, dataset_path):
