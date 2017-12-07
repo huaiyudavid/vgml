@@ -32,6 +32,10 @@ class Main extends React.Component {
                         <button className="btn-secondary" onClick={() => {
                             console.log(this.state);
                             fetch("http://54.174.204.120:5432/ratings", {
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
                                 method: "POST",
                                 body: JSON.stringify(this.state)
                             }).then(response => {
