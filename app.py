@@ -16,13 +16,6 @@ def top_ratings(user_id, count):
     top_ratings = recommendation_engine.get_top_ratings(user_id,count)
     return json.dumps(top_ratings)
  
-@main.route("/<int:user_id>/ratings/<int:game_id>", methods=["GET"])
-def game_ratings(user_id, game_id):
-    logger.debug("User %s rating requested for game %s", user_id, game_id)
-    ratings = recommendation_engine.get_ratings_for_game_ids(user_id, [game_id])
-    return json.dumps(ratings)
- 
- 
 @main.route("/ratings", methods = ["POST"])
 def add_ratings():
     # get the ratings from the Flask POST request object
