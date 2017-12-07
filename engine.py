@@ -47,7 +47,7 @@ class RecommendationEngine:
         predicted_rating_title_and_count_RDD = \
             predicted_rating_title_and_count_RDD.map(lambda r: (r[0], r[1][0], r[1][1]))
 
-        return predicted_rating_title_and_count_RDD
+        return predicted_RDD
 
     def add_ratings(self, ratings):
         """Add additional game ratings in the format (user_id, game_id, rating)
