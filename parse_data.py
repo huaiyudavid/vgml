@@ -1,4 +1,5 @@
 import csv
+import numpy
 
 games = set()
 data = []
@@ -24,3 +25,17 @@ with open('game_titles.csv', 'wb') as csvfile:
     writer = csv.writer(csvfile, delimiter=',', quotechar='\"', quoting=csv.QUOTE_MINIMAL)
     for name, i in name_to_id.iteritems():
         writer.writerow([i, name])
+
+ratings = []
+with open('game_ratings.csv', 'rb') as csvfile:
+    reader = csv.reader(csvfile, delimiter=',', quotechar='\"')
+    for row in reader:
+        user_id, game_id, value = row
+        ratings.append(float(value))
+
+for rating in ratings[0:1000]:
+    print rating
+
+print numpy.mean(ratings)
+print numpy.std(ratings)
+
