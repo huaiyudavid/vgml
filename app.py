@@ -32,7 +32,7 @@ def add_ratings():
     ratings = map(lambda x: (1, int(x['id']), float(x['rating'])), ratings_list)
     # add them to the model using then engine API
     recommendation_engine.add_ratings(ratings)
-    top_ratings = recommendation_engine.get_top_ratings(user_id,10)
+    top_ratings = recommendation_engine.get_top_ratings(1,10)
  
     return json.dumps(top_ratings)
  
