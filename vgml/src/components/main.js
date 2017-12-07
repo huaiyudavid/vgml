@@ -10,7 +10,8 @@ let optionSelected = function(result) {
 
 class Main extends React.Component {
     state = {
-        ratings: []
+        ratings: [],
+        recommendations: []
     };
 
     render() {
@@ -39,7 +40,9 @@ class Main extends React.Component {
                                 method: "POST",
                                 body: JSON.stringify(this.state)
                             }).then(response => {
-                                console.log(response);
+                                return response.json();
+                            }).then(obj => {
+                                console.log(obj);
                             });
                         }}>
                             Submit
