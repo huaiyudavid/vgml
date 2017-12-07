@@ -38,7 +38,7 @@ class RecommendationEngine:
 
     def __predict_ratings(self, user_and_game_RDD):
         """Gets predictions for a given (userID, gameID) formatted RDD
-        Returns: an RDD with format (gameID, gameRating, numRatings)
+        Returns: an RDD with format (gameID, gameRating)
         """
         predicted_RDD = self.model.predictAll(user_and_game_RDD)
         predicted_rating_RDD = predicted_RDD.map(lambda x: (x.product, x.rating))
@@ -47,9 +47,9 @@ class RecommendationEngine:
         predicted_rating_title_and_count_RDD = \
             predicted_rating_RDD.join(self.game_rating_counts_RDD)
         predicted_rating_title_and_count_RDD = \
-            predicted_rating_title_and_count_RDD.map(lambda r: (r[0], r[1][1], r[1][0]))
+            predicted_rating_title_and_count_RDD.map(lambda r: (r[0], r[1][0], r[1][1]))
 
-        return predicted_RDD
+        return predicted_rating_title_and_count_RDD
 
     def add_ratings(self, ratings):
         """Add additional game ratings in the format (user_id, game_id, rating)
